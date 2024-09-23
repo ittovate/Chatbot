@@ -1,0 +1,34 @@
+spring:
+  cloud:
+    function:
+      definition: "fileSupplier;documentReader;splitter;titleDeterminer;vectorStoreConsumer"
+  application:
+    name: chatbot
+  datasource:
+    url: jdbc:postgresql://ep-orange-dream-a2mkxmpl.eu-central-1.aws.neon.tech/vectorstore?user=vectorstore_owner&password=${POSTGRESQL_PASSWORD}&sslmode=require
+    username: vectorstore_owner
+    password: ${POSTGRESQL_PASSWORD}
+  ai:
+    openai:
+      embedding:
+        enabled: true
+      api-key: ${SPRING_AI_OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4o-mini
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1536
+logging:
+  level:
+    org:
+      springframework:
+        ai:
+          chat:
+            client:
+              advisor: DEBUG
+file:
+  supplier:
+    directory: "/c/Users/Andre/IdeaProjects/chatbot/files"
